@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %} Welcome to ashar ! {% endblock %}
+
+{% block content %}
+   <h1>Вы можете искать переводы для фраз<br>Либо если не найдено, то добавлять фразы!</h1>
+   <br>
+    <div class="forms">
+      <form action="#" method="get" method="post">
+          <input type="text" name="fname" placeholder="you can add your phrase">
+          <input type="submit" value="search">
+          <input type="submit" value="add">
+      </form>
+    </div>
+
+    <h1>Последние добавленные фразы : </h1>
+
+{% endblock%}
+
+

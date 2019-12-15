@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<body>
+{% if object.user_email == user.user_email and user.is_authenticated %}{% endif %}
+
+    <div>
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+</form>
+
+
+    </div>
+</body>
+{% endblock content %}

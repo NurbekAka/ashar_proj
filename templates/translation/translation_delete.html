@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+   <form action="." method="POST">{% csrf_token %}
+        <h1>Do you want to delete translation?</h1>
+        <p><input type="submit" value="yes"/> <button href="../">cancel</button></p>
+    </form>
+
+{% endblock %}

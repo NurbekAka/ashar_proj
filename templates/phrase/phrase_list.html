@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<h1>List of phrases</h1>
+<form method="GET" action=''>
+    <input type="text" name="q"  placeholder="search..">
+    <button class="btn btn-success" type="submit">
+        Search
+    </button>
+</form>
+
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button><a href="{% url 'phrase_create' %}">Add phrase</a></button>
+    </form>
+
+{% for phrase in object_list %}
+    <div class="phrase-entry">
+        <h4><a href="{% url 'phrase_detail' pk=phrase.pk %}">{{ phrase.phrase_text }}</a></h4>
+        <h4>{{ phrase.username }}</h4>
+    </div>
+{% endfor %}
+{% endblock %}

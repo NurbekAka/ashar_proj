@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+    <button onclick="goBack()">Go Back</button>
+
+    <script>
+    function goBack() {
+      window.history.go(-1);
+    }
+    </script>
+
+    <h2>{{ translation.phrase_text }}</h2>
+    <h1>{{ translation.translate_text }}</h1>
+    <h5>{{ translation.username }}</h5>
+    <h5>{{ translation.complaint }}</h5>
+
+    {% if request.user.is_staff %}
+    <h5>{{ translation.is_deleted }}</h5>
+    {% endif %}
+
+    {% if translation.username == request.user %}
+    <a class="btn btn-default" href="{% url 'translation_edit' pk=translation.pk %}"><button>edit</button></a>
+    <a class="btn btn-default" href="{% url 'translation_delete' pk=translation.pk %}"><button>delete</button> </a>
+    {% endif %}
+
+<h1>Comments</h1>
+<html lang="en">
+
+<form method="POST" class="post-form">{% csrf_token %}
+    <div>
+    <p>{{ form.as_p }}</p>
+        {% if request.user %}
+    <button type="submit" class="save btn btn-default">Save</button>
+        {% else %}
+        <h5>Please, sign up to comment.</h5>
+        {% endif %}
+    </div>
+</form>
+
+
+    <div class="comments">
+        {% for instance in comments %}
+            <p>{{ instance.username }}</p>
+            <p> - <a href="{% url 'comment_detail' pk=instance.pk %}">{{ instance.comment }}</a></p>
+         {% endfor %}
+
+    </div>
+
+{% endblock %}
+

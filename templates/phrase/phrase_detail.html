@@ -1,0 +1,63 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<h1>Phrase detail</h1>
+    <h4><a href="{% url 'phrase_list' %}">Phrase List</a></h4>
+
+    {% if phrase.username == request.user %}
+    <a class="btn btn-default" href="{% url 'phrase_edit' pk=phrase.pk %}"><button>edit</button></a>
+    <a class="btn btn-default" href="{% url 'phrase_delete' pk=phrase.pk %}"><button>delete</button> </a>
+    {% endif %}
+
+
+
+<div class="phrases">
+    <h2>{{ phrase.phrase_text }}</h2>
+    <p>{{ phrase.username }}</p>
+    <p>{{ phrase.created_date }}</p>
+    <p>{{ phrase.number_of_votes }}</p>
+
+    {% if request.user.is_staff %}
+    <p>{{ phrase.is_deleted }}</p>
+    {% endif %}
+
+    <p>{{ phrase.complaint }}</p>
+</div>
+
+      {{ like_number }}
+
+    <form action="{% url 'like_phrase' %}" method="post">
+        {% csrf_token %}
+        {% if is_liked %}
+            <button type="submit" name="phrase_id" value="{{ phrase.id }}" class="btn btn-danger">Dislike</button>
+        {% else %}
+            <button type="submit" name="phrase_id" value="{{ phrase.id }}" class="btn btn-primary">Like</button>
+        {% endif %}
+    </form>
+
+    <div>
+    <h1>New Translation</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+    </div>
+
+
+<div class ="translations">
+        {% for translation in translations %}
+            <p><a href="{% url 'translation_detail' pk=translation.pk %}">{{ translation.translate_text }}</a></p>
+            <h6>{{ translation.created_date }}</h6>
+            <label>
+            {% if request.user.is_authenticated %}
+            <input type="checkbox" name="complaint"><a>complaint</a>
+            {% endif %}
+            </label>
+        {% endfor %}
+</div>
+
+
+
+{% endblock %}
+

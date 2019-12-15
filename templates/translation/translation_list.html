@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+    ALL TRANSLATIONS TRANSLATED
+
+    {% for instance in object_list %}
+        <p>Phrase: {{ instance.phrase_text }}</p>
+        <p>{{ instance.id }} - <a href="{% url 'translation_detail' pk=instance.pk %}">{{ instance.translate_text }}</a></p>
+    {% endfor %}
+
+
+
+{% endblock %}

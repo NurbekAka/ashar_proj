@@ -1,0 +1,24 @@
+
+{% extends 'base/base.html' %}
+{% block content %}
+    <button onclick="goBack()">Go Back</button>
+
+    <script>
+    function goBack() {
+      window.history.go(-1);
+    }
+    </script>
+
+    {% if translationcomment.username == request.user %}
+    <a class="btn btn-default" href="{% url 'comment_edit' pk=translationcomment.pk %}"><button>edit</button></a>
+    <a class="btn btn-default" href="{% url 'comment_delete' pk=translationcomment.pk %}"><button>delete</button> </a>
+     {% endif %}
+
+
+    <h2>Перевод: {{ translationcomment.translate }}</h2>
+    <h1>Коментарий: {{ translationcomment.comment }}</h1>
+    <h2>Автор: {{ translationcomment.username }}</h2>
+    {% if request.user.is_staff %}
+    <h5>{{ translationcomment.is_deleted }}</h5>
+    {% endif %}
+{% endblock %}
